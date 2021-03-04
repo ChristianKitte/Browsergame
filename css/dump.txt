@@ -1,0 +1,27 @@
+
+
+
+
+
+
+  #button
+    display: flex
+    flex-direction: column
+    top: 35%
+    width: 17%
+
+  .controlLayer
+    font-size: 0.8em
+
+
+
+  #canvas
+    position: relative
+    border-radius: 4%
+    top: 1%
+    height: 98%
+    left: 1%
+    width: 98%
+
+
+        top: 82%

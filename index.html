@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-control" content="no-cache">
+
+    <title>Spiel</title>
+
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery_ui.js"></script>
+    <script src="js/app.js"></script>
+</head>
+
+<body>
+<div id="container">
+    <div id="topArray">
+        <div id="counter" class="counterLayer">
+            <div id="points" class="subCounterLayer positive" title="Die aktuelle Punktzahl (rot = Minuspunkte)">
+                <blockquote>
+                    <p id="txtPoints">000000</p>
+                </blockquote>
+            </div>
+            <div id="action" class="subCounterLayer" title="Die aktuelle Geschwindigkeit">
+                <blockquote>
+                    <p id="txtAction">no action</p>
+                </blockquote>
+            </div>
+            <div id="level" class="subCounterLayer" title="Der aktuelle Level">
+                <blockquote>
+                    <p id="txtLevel">01</p>
+                </blockquote>
+            </div>
+            <div id="time" class="subCounterLayer" title="Die verbleibende Zeit">
+                <blockquote>
+                    <p id="txtTime">00:00</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <div id="div_tutorial" class="contentLayer hidden">
+        <article>
+            <h2>Spielanleitung</h2>
+
+            <p>Du bist der Schmetterling und Dein Ziel ist es, alle kostbaren gelben Lotusblumen der Wiese vor den
+                Wasserstrahlen zu retten. Sammel hierfür alle gelben Lotusblumen auf und erhalte dafür Punkte.
+                Sammle
+                rote Lotusblumen, um ein extra Plus an Punkten zu erhalten.</p>
+
+            <p>Hüte Dich vor den Wasserstrahlen. Treffen sie Dich, wirst Du weggeschleudert und verlierts
+                Punkte.</p>
+
+            <p>Wenn Du es schaffst, alle gelben Lotusblumen innerhalb der vorgegebenen Zeit einzusammeln und
+                verfügst
+                Du über mehr als 0 Punkte, so hast Du den Level erfolgreich bestanden und erreichts den nächsten
+                Level. Die vorhandenen Punkte bleiben erhalten.</p>
+
+            <p>Ein Level endet spätestens nach der im Spiel vorgegebenen Zeit oder nachdem die letzte gelbe
+                Lotusblume
+                gerettet wurde.</p>
+
+            <p>Hast Du es in der vorgegebenen Zeit nicht geschafft, alle gelben Lotusblumen zu retten, so hast Du
+                den
+                Level verloren. Hast Du noch Punkte, so verlierst Du 100 Punkte und musst den Level wiederholen.
+                Hast
+                Du weniger als 0 Punkte, so musst Du einen Level zurück und startest mit 0 Punkte. Während des
+                Levels
+                darfst Du hierbei auch weniger als 0 Punkte haben. Die Entscheidend fällt am Schluß!</p>
+
+            <p>Aber keine Angst! Kommst Du im ersten Level unter 0 Punkte und verlierst den Level, so bleibst Du bei
+                0
+                Punkten und im ersten Level stehen.</p>
+
+            <header>Steuerung des Spielers</header>
+
+            <ul>
+                <li>Linke Pfeiltaste: Drehung nach links</li>
+                <li>Rechte Pfeiltaste: Drehung nach rechts</li>
+                <li>Pfeil nach oben: Beschleunigung</li>
+                <li>Pfeil nach unten: Verzögerung</li>
+            </ul>
+
+            <header>Anzeigen oben (von links nach rechts)</header>
+
+            <ul>
+                <li>Anzahl der Punkte (<span class="green">Grün für Guthaben</span>, <span
+                        class="red">rot für Minuspunkte</span>)
+                </li>
+                <li>Aktuelle Geschwindigkeit</li>
+                <li>Aktueller Level</li>
+                <li>Verbleibende Spielzeit</li>
+            </ul>
+
+            <h2>Buttons</h2>
+            <ul>
+                <li>Tutorial
+                    <p>Das Tutorial, welches Du gerade liest...</p>
+                </li>
+                <li>Highscore
+                    <p>Hier kannst Du Deinen persönlichen Highscore für die Nachwelt festhalten. Die fünf besten
+                        Highscores werden angezeigt.</p>
+                </li>
+                <li>Zum Spiel
+                    <p>Hier kommst Du immer wieder zu Deinem Spiel zurück.</p>
+                </li>
+                <li>Level Starten
+                    <p>Startet den aktuellen Level. Willst Du den Level neu starten, so drücke den Button einfach
+                        ein
+                        weiteres mal. Die Punkte werden auf den Stand zu Begin des Levels gesetzt</p>
+                </li>
+                <li>Neues Spiel
+                    <p>Startet das gesamte Spiel neu. Alle gewonnenen Punkte gehen verloren und Du fängst bei null
+                        an.</p>
+                </li>
+                <li>Sound An/Aus
+                    <p>Hier kannst Du den Sound an- und natürlich auch wieder ausschalten. Entscheide: Spielst Du
+                        lieber
+                        allein oder mit Begleitung...?</p>
+                </li>
+                <li>Impressum
+                    <p>Jede Seite braucht es fast, nicht alle haben es; Das Impressum! Gleiches oder ähnliches hast
+                        Du
+                        bestimmt schon oft gelesen...</p>
+                </li>
+                <li>Datenschutz
+                    <p>DSGVO lässt grüßen. Wenn Du etwas über Deine Rechte und aufgezeichneten Daten auf dieser
+                        Seite
+                        erfahren willst, bist Du hier richtig...</p>
+                </li>
+                <li>Credits
+                    <p>Last but not least, die Credits. Hier erfährst Du etwas über die Urheber und Herkunft der
+                        verwendeten Grafiken, Sounds und Schriften.</p>
+                </li>
+            </ul>
+
+            <h2>Für Strategen</h2>
+
+            <p>Im Verlauf des Spiels werden die Umgebungsbedingungen schwerer. Für die Strategen unter euch sind
+                hier
+                die veränderlichen Bedingungen aufgelistet. <code>RND</code> entspricht ein Zufallswert
+                zwischen 0 und 1. Alle anderen Parameter bleiben konstant.</p>
+
+            <header>Blumen:</header>
+            <ul>
+                <li>Die Anzahl der gelben Blumen errechnet sich nach der Formel <code>(Integer)(Level * 0.5 +
+                    1)</code>
+                </li>
+                <li>Die Anzahl aller nicht gelben Blumen errechnet sich nach der Formel <code>(Integer)(80 - Level *
+                    ( 2
+                    + (Integer)(Level * 0.1)))</code></li>
+
+                <li>Der Faktor, mit dem gelbe Blumen ihren Wert erhalten, errechnet sich nach der Formel <code>RND *
+                    (100 - (Integer)(Level * 0.5 + 1))</code></li>
+                <li>Der Faktor, mit dem nicht gelbe Blumen ihren Wert erhalten, errechnet sich nach der Formel
+                    <code>RND
+                        * (100 - (Integer)(Level * 0.5 + 1))</code></li>
+
+                <li>Gelbe Blumen haben aber mindestens 400 Punkte, alle anderen 3 Punkte</li>
+            </ul>
+
+            <header>Wasserstrahlen</header>
+            <ul>
+                <li>Die Anzahl der Wasserstrahlen errechnet sich aus der Formel <code>(Integer)(Level * 0.2) +
+                    1</code>
+                </li>
+            </ul>
+        </article>
+    </div>
+
+    <div id="div_highscore" class="contentLayer hidden">
+        <div id="highscore_table_div">
+            <table id="highscore_table">
+                <tr>
+                    <th>Platz</th>
+                    <th>Spieler</th>
+                    <th>Punktzahl</th>
+                </tr>
+            </table>
+        </div>
+
+        <div id="highscore_add_div">
+            <form id="highscore_add_form" action="#">
+                <fieldset>
+                    <label for="highscore_add_name">Spieler</label>
+                    <input type="text" id="highscore_add_name" name="player" placeholder="Spieler"/>
+
+                    <input type="submit" value="Verewige mich!"/>
+                </fieldset>
+            </form>
+        </div>
+
+        <div id="dialog_name">
+            <p>Geben Sie einen Namen an....</p>
+        </div>
+
+        <div id="dialog_points">
+            <p>Negative oder 0 Punkte zählen nicht....</p>
+        </div>
+    </div>
+
+    <div id="div_game" class="contentLayer show">
+        <canvas id="canvas" width="90% height=90%">
+            Ihr Browser unterstützt keine Canvas
+        </canvas>
+    </div>
+
+    <div id="div_impressum" class="contentLayer hidden">
+        <article>
+            <h2>Impressum</h2>
+
+            <p>Name<br/>
+                Straße<br/>
+                Ort</p>
+
+            <p>Telefon: 0000 000000<br/>
+                E-Mail: <a
+                        href="mailto:xxx@xxx.de">xxx@xxx.de</a><br/>
+            </p>
+
+            <h2>Disclaimer – rechtliche Hinweise</h2>
+
+            <header>§ 1 Warnhinweis zu Inhalten</header>
+            <p>Die kostenlosen und frei zugänglichen Inhalte dieser Webseite wurden mit größtmöglicher Sorgfalt
+                erstellt. Der Anbieter dieser Webseite übernimmt jedoch keine Gewähr für die Richtigkeit und
+                Aktualität der bereitgestellten kostenlosen und frei zugänglichen journalistischen Ratgeber und
+                Nachrichten.
+                Namentlich gekennzeichnete Beiträge geben die Meinung des jeweiligen Autors und nicht immer die
+                Meinung des Anbieters wieder. Allein durch den Aufruf der kostenlosen und frei zugänglichen Inhalte
+                kommt
+                keinerlei Vertragsverhältnis zwischen dem Nutzer und dem Anbieter zustande, insoweit fehlt es am
+                Rechtsbindungswillen des Anbieters.</p>
+
+            <header>§ 2 Externe Links</header>
+            <p>Diese Website enthält Verknüpfungen zu Websites Dritter ("externe Links"). Diese Websites unterliegen
+                der Haftung der jeweiligen Betreiber. Der Anbieter hat bei der erstmaligen Verknüpfung der externen
+                Links die fremden Inhalte daraufhin überprüft, ob etwaige Rechtsverstöße bestehen. Zu dem Zeitpunkt
+                waren keine Rechtsverstöße ersichtlich. Der Anbieter hat keinerlei Einfluss auf die aktuelle und
+                zukünftige Gestaltung und auf die Inhalte der verknüpften Seiten. Das Setzen von externen Links
+                bedeutet nicht, dass sich der Anbieter die hinter dem Verweis oder Link liegenden Inhalte zu Eigen
+                macht.
+                Eine ständige Kontrolle der externen Links ist für den Anbieter ohne konkrete Hinweise auf
+                Rechtsverstöße
+                nicht zumutbar. Bei Kenntnis von Rechtsverstößen werden jedoch derartige externe Links unverzüglich
+                gelöscht.</p>
+
+            <header>§ 3 Urheber- und Leistungsschutzrechte</header>
+            <p>Die auf dieser Website veröffentlichten Inhalte unterliegen dem deutschen Urheber- und
+                Leistungsschutzrecht. Jede vom deutschen Urheber- und Leistungsschutzrecht nicht zugelassene
+                Verwertung bedarf der vorherigen schriftlichen Zustimmung des Anbieters oder jeweiligen
+                Rechteinhabers. Dies gilt insbesondere für Vervielfältigung, Bearbeitung, Übersetzung,
+                Einspeicherung,
+                Verarbeitung bzw. Wiedergabe von Inhalten in Datenbanken oder anderen elektronischen Medien und
+                Systemen.
+                Inhalte und Rechte Dritter sind dabei im Abschnitt Credits als solche gekennzeichnet und unterliegen
+                den
+                dort aufgeführten Beschränkungen und Bestimmungen. Die unerlaubte Vervielfältigung oder Weitergabe
+                einzelner
+                Inhalte oder kompletter Seiten ist nicht gestattet und strafbar. Lediglich die Herstellung von
+                Kopien
+                und
+                Downloads für den persönlichen, privaten und nicht kommerziellen Gebrauch ist erlaubt.</p>
+
+            <p>Die Darstellung dieser Website in fremden Frames ist nur mit schriftlicher Erlaubnis zulässig.</p>
+
+            <header>§ 4 Besondere Nutzungsbedingungen</header>
+            <p>Soweit besondere Bedingungen für einzelne Nutzungen dieser Website von den vorgenannten Paragraphen
+                abweichen, wird an entsprechender Stelle ausdrücklich darauf hingewiesen. In diesem Falle gelten im
+                jeweiligen Einzelfall die besonderen Nutzungsbedingungen.</p>
+
+            <header>Quelle:</header>
+            <p>Auf Basis der <a href="https://www.juraforum.de/impressum-generator/" target="_blank">Impressum
+                Vorlage
+                von
+                JuraForum.de</a></p>
+        </article>
+    </div>
+
+    <div id="div_datenschutz" class="contentLayer hidden">
+        <article>
+            <h2>Datenschutz</h2>
+
+            <p>Personenbezogene Daten (nachfolgend zumeist nur „Daten“ genannt) werden von uns nur im Rahmen der
+                Erforderlichkeit sowie zum Zwecke der Bereitstellung eines funktionsfähigen und nutzerfreundlichen
+                Internetauftritts, inklusive seiner Inhalte und der dort angebotenen Leistungen, verarbeitet.</p>
+
+            <p>Gemäß Art. 4 Ziffer 1. der Verordnung (EU) 2016/679, also der Datenschutz-Grundverordnung
+                (nachfolgend
+                nur
+                „DSGVO“ genannt), gilt als „Verarbeitung“ jeder mit oder ohne Hilfe automatisierter Verfahren
+                ausgeführter
+                Vorgang oder jede solche Vorgangsreihe im Zusammenhang mit personenbezogenen Daten, wie das Erheben,
+                das
+                Erfassen, die Organisation, das Ordnen, die Speicherung, die Anpassung oder Veränderung, das
+                Auslesen,
+                das
+                Abfragen, die Verwendung, die Offenlegung durch Übermittlung, Verbreitung oder eine andere Form der
+                Bereitstellung, den Abgleich oder die Verknüpfung, die Einschränkung, das Löschen oder die
+                Vernichtung.</p>
+
+            <p>Mit der nachfolgenden Datenschutzerklärung informieren wir Sie insbesondere über Art, Umfang, Zweck,
+                Dauer
+                und Rechtsgrundlage der Verarbeitung personenbezogener Daten, soweit wir entweder allein oder
+                gemeinsam
+                mit
+                anderen über die Zwecke und Mittel der Verarbeitung entscheiden. Zudem informieren wir Sie
+                nachfolgend
+                über
+                die von uns zu Optimierungszwecken sowie zur Steigerung der Nutzungsqualität eingesetzten
+                Fremdkomponenten,
+                soweit hierdurch Dritte Daten in wiederum eigener Verantwortung verarbeiten.</p>
+
+            <p>
+                <u>Diese Datenschutzerklärung ist wie folgt gegliedert:</u>
+            </p>
+
+            <ol style="list-style-type:upper-roman;">
+                <li>Informationen über uns als Verantwortliche</li>
+                <li>Rechte der Nutzer und Betroffenen</li>
+                <li>Informationen zur Datenverarbeitung</li>
+            </ol>
+
+            <h2>I. Informationen über mich als Verantwortliche</h2>
+
+            <p>Verantwortlicher Anbieter dieses Internetauftritts im datenschutzrechtlichen Sinne ist:</p>
+
+            <p>Name<br/>
+                Straße<br/>
+                Ort</p>
+
+            <p>Telefon: 0000 000000<br/>
+                E-Mail: <a
+                        href="mailto:xxx@xxx.de">xxx@xxx.de</a><br/>
+            </p>
+
+            <h2>II. Rechte der Nutzer und Betroffenen</h2>
+
+            <p>Mit Blick auf die nachfolgend noch näher beschriebene Datenverarbeitung haben die Nutzer und
+                Betroffenen
+                das
+                Recht</p>
+
+            <ul>
+                <li>auf Bestätigung, ob sie betreffende Daten verarbeitet werden</li>
+                <li>auf Auskunft über die verarbeiteten Daten</li>
+                <li>auf weitere Informationen über die Datenverarbeitung sowie auf Kopien der Daten (vgl. auch Art.
+                    15
+                    DSGVO)
+                </li>
+                <li>auf Berichtigung oder Vervollständigung unrichtiger bzw. unvollständiger Daten (vgl. auch Art.
+                    16
+                    DSGVO)
+                </li>
+                <li>auf unverzügliche Löschung der sie betreffenden Daten (vgl. auch Art. 17 DSGVO), oder,
+                    alternativ,
+                    soweit eine weitere Verarbeitung gemäß Art. 17 Abs. 3 DSGVO erforderlich ist, auf Einschränkung
+                    der
+                    Verarbeitung nach Maßgabe von Art. 18 DSGVO
+                </li>
+                <li>auf Erhalt der sie betreffenden und von ihnen bereitgestellten Daten und auf Übermittlung dieser
+                    Daten
+                    an andere Anbieter/Verantwortliche (vgl. auch Art. 20 DSGVO)
+                </li>
+                <li>auf Beschwerde gegenüber der Aufsichtsbehörde, sofern sie der Ansicht sind, dass die sie
+                    betreffenden
+                    Daten durch den Anbieter unter Verstoß gegen datenschutzrechtliche Bestimmungen verarbeitet
+                    werden
+                    (vgl. auch Art. 77 DSGVO)
+                </li>
+            </ul>
+
+            <p>Darüber hinaus ist der Anbieter dazu verpflichtet, alle Empfänger, denen gegenüber Daten durch den
+                Anbieter
+                offengelegt worden sind, über jedwede Berichtigung oder Löschung von Daten oder die Einschränkung
+                der
+                Verarbeitung, die aufgrund der Artikel 16, 17 Abs. 1, 18 DSGVO erfolgt, zu unterrichten. Diese
+                Verpflichtung
+                besteht jedoch nicht, soweit diese Mitteilung unmöglich oder mit einem unverhältnismäßigen Aufwand
+                verbunden
+                ist. Unbeschadet dessen hat der Nutzer ein Recht auf Auskunft über diese Empfänger.</p>
+
+            <p>Ebenfalls haben die Nutzer und Betroffenen nach Art. 21 DSGVO das Recht auf Widerspruch gegen die
+                künftige
+                Verarbeitung der sie betreffenden Daten, sofern die Daten durch den Anbieter nach Maßgabe von Art. 6
+                Abs. 1
+                lit. f) DSGVO verarbeitet werden. Insbesondere ist ein Widerspruch gegen die Datenverarbeitung zum
+                Zwecke
+                der Direktwerbung statthaft.</p>
+
+            <h2>III. Informationen zur Datenverarbeitung</h2>
+
+            <p>Ihre bei Nutzung unseres Internetauftritts verarbeiteten Daten werden gelöscht oder gesperrt, sobald
+                der
+                Zweck der Speicherung entfällt, der Löschung der Daten keine gesetzlichen Aufbewahrungspflichten
+                entgegenstehen und nachfolgend keine anderslautenden Angaben zu einzelnen Verarbeitungsverfahren
+                gemacht
+                werden.</p>
+
+            <header>Serverdaten</header>
+
+            <p>Aus technischen Gründen, insbesondere zur Gewährleistung eines sicheren und stabilen
+                Internetauftritts,
+                werden Daten durch Ihren Internet-Browser an uns bzw. an unseren Webspace-Provider übermittelt. Mit
+                diesen
+                sog. Server-Logfiles werden u.a. Typ und Version Ihres Internetbrowsers, das Betriebssystem, die
+                Website,
+                von der aus Sie auf unseren Internetauftritt gewechselt haben (Referrer URL), die Website(s) unseres
+                Internetauftritts, die Sie besuchen, Datum und Uhrzeit des jeweiligen Zugriffs sowie die IP-Adresse
+                des
+                Internetanschlusses, von dem aus die Nutzung unseres Internetauftritts erfolgt, erhoben.</p>
+
+            <p>Diese so erhobenen Daten werden vorrübergehend gespeichert, dies jedoch nicht gemeinsam mit anderen
+                Daten
+                von Ihnen.</p>
+
+            <p>Diese Speicherung erfolgt auf der Rechtsgrundlage von Art. 6 Abs. 1 lit. f) DSGVO. Unser berechtigtes
+                Interesse liegt in der Verbesserung, Stabilität, Funktionalität und Sicherheit unseres
+                Internetauftritts.</p>
+
+            <p>Die Daten werden spätestens nach sieben Tage wieder gelöscht, soweit keine weitere Aufbewahrung zu
+                Beweiszwecken erforderlich ist. Andernfalls sind die Daten bis zur endgültigen Klärung eines
+                Vorfalls
+                ganz
+                oder teilweise von der Löschung ausgenommen.</p>
+
+            <header>Kontaktanfragen / Kontaktmöglichkeit</header>
+
+            <p>Sofern Sie durch die Nutzung des Highscores oder per E-Mail mit uns in Kontakt treten, werden die
+                dabei von Ihnen angegebenen Daten zur Bearbeitung Ihrer Anfrage genutzt. Die Angabe der Daten ist
+                zur
+                Bearbeitung und Beantwortung Ihre Anfrage erforderlich - ohne deren Bereitstellung können wir Ihre
+                Anfrage
+                nicht oder allenfalls eingeschränkt beantworten.</p>
+
+            <p>Rechtsgrundlage für diese Verarbeitung ist Art. 6 Abs. 1 lit. b) DSGVO.</p>
+
+            <p>Ihre Daten werden gelöscht, sofern Ihre Anfrage abschließend beantwortet worden ist und der Löschung
+                keine
+                gesetzlichen Aufbewahrungspflichten entgegenstehen, wie bspw. bei einer sich etwaig anschließenden
+                Vertragsabwicklung.</p>
+
+            <p>Im Falle der Nutzung der Highscorefunktion wird die Angabe des Namens zusammen mit dem aktuellen
+                Punktestand
+                ausschließlich zur Generierung einer öffentlich sichtbaren Highscoreliste genutzt. Es erfolgt keine
+                Verknüpfung mit anderen Daten.</p>
+
+            <header>Quelle:</header>
+            <p>Basierend auf der <a href="https://www.ratgeberrecht.eu/leistungen/muster-datenschutzerklaerung.html"
+                                    target="_blank">
+                Muster-Datenschutzerklärung der Anwaltskanzlei Weiß & Partner</a></p>
+        </article>
+    </div>
+
+    <div id="div_credits" class="contentLayer hidden">
+        <article>
+            <h1>some credits...</h1>
+            <p>Alle im Spiel verwendeten grafischen Elemente, Sounds und Musik stammen von der Steite <a
+                    href="https://opengameart.org" target="_blank">
+                https://opengameart.org</a>. Teilweise wurden Sie verändert, um den Erfordernissen hier gerecht zu
+                werden.
+                Bei den Schriftarten handelt es sich entweder um default oder unter Google Fonds
+                <a href="https://fonts.google.com/" target="_blank">https://fonts.google.com/</a> freigegebene
+                Schrifte
+            </p>
+
+            <p>Die folgenden Links führen zu den einzelnen Lizenztexten: </p>
+            <ul>
+                <li><a href="https://creativecommons.org/publicdomain/zero/1.0/deed.de" target="_blank">CCO</a></li>
+                <li><a href="https://creativecommons.org/licenses/by/3.0/deed.de" target="_blank">CC-BY 3.0</a></li>
+                <li><a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC-BY-SA 3.0 (CC
+                    Attribution-ShareAlike 3.0
+                    Unported)</a></li>
+                <li><a href="https://creativecommons.org/licenses/by/4.0/deed.de" target="_blank">CC-BY 4.0</a></li>
+                <li><a href="http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web" target="_blank">Open
+                    Font
+                    License</a></li>
+                <li><a href="http://static.opengameart.org/OGA-BY-3.0.txt" target="_blank">OGA-BY 3.0</a></li>
+            </ul>
+
+            <h1>Fonts</h1>
+            <article>
+                <header>Standardschrift</header>
+                <a href="https://fonts.google.com/specimen/Indie+Flower" target="_blank">https://fonts.google.com/specimen/Indie+Flowern</a><br>
+                Font: Indie Flower<br>
+                Designer: Kimberly Geswein<br>
+                Lizenz: Open Font License<br>
+            </article>
+
+            <article>
+                <header>Standardschrift</header>
+                <a href="https://fonts.google.com/specimen/Faster+One" target="_blank">https://fonts.google.com/specimen/Indie+Flowern</a><br>
+                Font: Faster One<br>
+                Designer: Eduardo Tunni<br>
+                Lizenz: Open Font License<br>
+            </article>
+
+            <h1>Texture und Icons</h1>
+            <article>
+                <header>Die Schmetterlingsbilder, aus denen das hier verwendete Sprite und das Favicon erzeugt
+                    wurden
+                </header>
+                <a href="https://opengameart.org/content/butterfly-animation" target="_blank">https://opengameart.org/content/butterfly-animation</a><br>
+                Credit: DontMind8 (dontmind8.blogspot.com)<br>
+                Lizenz: CC-BY 3.0, CC-BY 3.0<br>
+            </article>
+
+            <article>
+                <header>Die Lotusblüten auf dem Spielfeld</header>
+                <a href="https://opengameart.org/content/lotus-flowers" target="_blank">https://opengameart.org/content/lotus-flowers</a><br>
+                Credit: Gostay<br>
+                Lizenz: CC0<br>
+            </article>
+
+            <article>
+                <header>Das Grass der Spielfläche</header>
+                <a href="https://opengameart.org/content/seamless-grass-textures-20-pack" target="_blank">https://opengameart.org/content/seamless-grass-textures-20-pack</a><br>
+                Credit: athile<br>
+                Lizenz: CC0<br>
+            </article>
+
+            <article>
+                <header>Die Wassertextur der Wasserstrahlen</header>
+                <a href="https://opengameart.org/content/water-texture-pack" target="_blank">https://opengameart.org/content/water-texture-pack</a><br>
+                Credit: MrCraft Animation<br>
+                Lizenz: CC0<br>
+            </article>
+
+            <h1>Soundeffekte</h1>
+            <article>
+                <header>Die Hintergrundmusik im Spiel</header>
+                Datei: backgrnd.ogg<br>
+                <a href="https://opengameart.org/content/the-fall-of-arcana-epic-game-theme-music" target="_blank">https://opengameart.org/content/the-fall-of-arcana-epic-game-theme-music</a><br>
+                Credit: Music by Matthew Pablo (http://www.matthewpablo.com)<br>
+                Lizenz: CC-BY 3.0<br>
+            </article>
+
+            <article>
+                <header>Das Wassergeräusch</header>
+                Datei: water.ogg<br>
+                <a href="https://opengameart.org/content/elemental-spell" target="_blank">https://opengameart.org/content/elemental-spell</a><br>
+                Credit: Copyright 2012 Iwan 'qubodup' Gabovitch http://qubodup.net qubodup@gmail.com<br>
+                Lizenz: CC-BY-SA 3.0<br>
+            </article>
+
+            <article>
+                <header>Der Buttonclick</header>
+                Datei: buttonClick.ogg<br>
+                <a href="https://opengameart.org/content/camerashudder" target="_blank">https://opengameart.org/content/camerashudder</a><br>
+                Credit: FacadeGaikan<br>
+                Lizenz: CC0<br>
+            </article>
+
+            <article>
+                <header>Blumensammeln 1</header>
+                Datei: getFlower1.ogg<br>
+                <a href="https://opengameart.org/content/completion-sound" target="_blank">https://opengameart.org/content/completion-sound</a><br>
+                Credit: Brandon Morris<br>
+                Lizenz: OGA-BY 3.0<br>
+            </article>
+
+            <article>
+                <header>Blumensammeln 2</header>
+                Datei: getFlower2.ogg<br>
+                <a href="https://opengameart.org/content/oldschool-win-and-die-jump-and-run-sounds" target="_blank">https://opengameart.org/content/oldschool-win-and-die-jump-and-run-sounds</a><br>
+                Credit: sauer2<br>
+                Lizenz: CC0<br>
+            </article>
+
+            <article>
+                <header>Startsignal für den Level</header>
+                Datei: levelStart.ogg<br>
+                <a href="https://opengameart.org/content/church-bell" target="_blank">https://opengameart.org/content/church-bell</a><br>
+                Credit: Copyrght 2008-2010 Ulrich Metzner<br>
+                Lizenz: CC-BY-SA 3.0<br>
+            </article>
+
+            <article>
+                <header>Hintergrundmusik im Levelende</header>
+                Datei: levelEnd.ogg<br>
+                <a href="https://opengameart.org/content/ending-song" target="_blank">https://opengameart.org/content/ending-song</a><br>
+                Credit: Frenchyboy<br>
+                Lizenz: CC0<br>
+            </article>
+        </article>
+    </div>
+
+    <div id="button" class="controlLayer">
+        <button id="btn_showTutorial" title="Zum Tutorial">
+            <span>Tutorial</span>
+        </button>
+        <button id="btn_showHighscore" title="Zur Highscore Eingabe">
+            <span>Highscore</span>
+        </button>
+        <button id="btn_showGame" class="selected" title="Zurück zum Spiel">
+            <span>Zum Spiel</span>
+        </button>
+        <button id="btn_startLevel" title="Den aktuellen Level (neu) starten">
+            <span>Level Starten</span>
+        </button>
+        <button id="btn_newGame" title="Das Spiel neu starten">
+            <span>Neues Spiel</span>
+        </button>
+        <button id="btn_playSound" title="Den Sound An und Aus schalten">
+            <span>Sound: An</span>
+        </button>
+        <button id="btn_showImpressum" title="Zeigt das Impressum an">
+            <span>Impressum</span>
+        </button>
+        <button id="btn_showDatenschutz" title="Zu den Datenschutzerklärungen">
+            <span>Datenschutz</span>
+        </button>
+        <button id="btn_showCredits" title="Zu den Danksagungen">
+            <span>Credits</span>
+        </button>
+    </div>
+
+    <div id="controlerButtonLayer">
+        <button class="btn_control" id="btn_forward">vor</button>
+        <div id="controlButtonDirectionLayer">
+            <button class="btn_control" id="btn_left">links</button>
+            <button class="btn_control" id="btn_right">rechts</button>
+        </div>
+        <button class="btn_control" id="btn_back">zurück</button>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,280 @@
+/* faster-one-regular - latin */
+@font-face {
+  font-family: "Faster One";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Faster One"), local("FasterOne-Regular");
+  src: url("../fonts/faster-one-v10-latin/faster-one-v10-latin-regular.woff2") format("woff2");
+  src: url("../fonts/faster-one-v10-latin/faster-one-v10-latin-regular.woff") format("woff"); }
+/* indie-flower-regular - latin */
+@font-face {
+  font-family: "Indie Flower";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Indie Flower"), local("IndieFlower");
+  src: url("../fonts/indie-flower-v10-latin/indie-flower-v10-latin-regular.woff2") format("woff2");
+  src: url("../fonts/indie-flower-v10-latin/indie-flower-v10-latin-regular.woff") format("woff"); }
+#controlerButtonLayer {
+  display: none; }
+
+body {
+  font-family: "Indie Flower", cursive;
+  padding-bottom: 3%; }
+
+button:focus {
+  outline: none; }
+
+button:active {
+  background-color: red; }
+
+button {
+  background-color: chartreuse;
+  font-family: "Indie Flower", cursive;
+  font-size: 1em;
+  width: 90%;
+  height: 2em;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px; }
+
+button.selected {
+  background-color: #ffb938; }
+
+button.btn_control {
+  border-radius: 1em;
+  font-size: 1.3em;
+  background-color: #f5618f;
+  padding: 5px; }
+
+#btn_startLevel, #btn_newGame, #btn_playSound {
+  background-color: #67f5f5; }
+
+#controlerButtonLayer {
+  position: absolute;
+  bottom: 5%;
+  width: 100%; }
+
+header {
+  text-decoration-line: underline; }
+
+a {
+  text-decoration-line: none; }
+
+span.green {
+  color: green; }
+
+code, span.red {
+  color: red; }
+
+div#topArray {
+  position: fixed;
+  width: 100%;
+  height: 14%;
+  top: 0%;
+  background-color: white;
+  opacity: 1;
+  z-index: 100; }
+
+div.counterLayer {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: fixed;
+  width: 75%;
+  height: 7%;
+  left: 5%;
+  top: 5%;
+  background-color: white; }
+
+div.subCounterLayer {
+  font-family: "Faster One", cursive;
+  font-size: 2em;
+  background-color: white;
+  border-radius: 15px;
+  border-color: darkgray;
+  border-style: solid;
+  border-bottom-width: medium;
+  margin: 0.3%;
+  position: relative;
+  float: left;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+#points {
+  flex-grow: 2;
+  font-size: 2.5em; }
+
+#points.negative {
+  color: red; }
+
+#points.positive {
+  color: green; }
+
+#action {
+  flex-grow: 2; }
+
+#level, #time {
+  flex-grow: 1; }
+
+div.contentLayer {
+  position: absolute;
+  width: 75%;
+  height: 75%;
+  left: 5%;
+  top: 14%; }
+
+div#highscore_add_div {
+  position: relative;
+  width: 75%;
+  height: 75%;
+  left: 5%;
+  top: 13%; }
+
+div.controlLayer {
+  position: fixed;
+  width: 15%;
+  height: 75%;
+  right: 2%;
+  top: 20%;
+  background-color: transparent; }
+
+div#div_tutorial, div#div_highscore, div#div_impressum, div#div_datenschutz {
+  background: transparent; }
+
+table#highscore_table {
+  width: 100%; }
+
+table#highscore_table th {
+  background-color: khaki;
+  border-radius: 30px; }
+
+table#highscore_table td {
+  background-color: lightgoldenrodyellow;
+  border-radius: 30px;
+  text-align: center; }
+
+div.hidden {
+  display: none; }
+
+div.show {
+  display: block; }
+
+#highscore_add_div {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  height: 10px; }
+
+fieldset {
+  border-color: transparent;
+  background-color: transparent;
+  color: white;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue; }
+
+input[type=submit] {
+  background-color: white;
+  border-color: transparent;
+  font-family: "Indie Flower", cursive;
+  font-size: 1em;
+  width: 8em;
+  height: 2em;
+  margin-top: 2%;
+  margin-right: 5%;
+  color: white;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue; }
+
+input[type=submit]:hover,
+input[type=submit]:focus {
+  color: darkorange;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer; }
+
+input[type=text] {
+  font-family: "Indie Flower", cursive;
+  font-size: 1em;
+  width: 300px;
+  height: 2em;
+  border-radius: 10px; }
+
+div#div_game {
+  border-color: whitesmoke;
+  border: 1px solid;
+  border-radius: 20px;
+  margin: 5px; }
+
+#canvas {
+  position: relative;
+  border-radius: 2%;
+  top: 1%;
+  height: 98%;
+  left: 1%;
+  width: 98%; }
+
+@media (max-width: 800px) {
+  #container {
+    min-height: 600px; }
+
+  #button button {
+    height: 3em;
+    width: 90%;
+    font-size: small; }
+
+  #counter {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+    height: 5%;
+    width: 72%;
+    top: 10%;
+    left: 7%; }
+
+  .contentLayer {
+    position: absolute;
+    border-bottom-color: transparent;
+    margin-top: 12%;
+    height: 50%; }
+
+  #div_game {
+    position: absolute;
+    top: 25%;
+    height: 55%; }
+
+  #canvas {
+    position: relative;
+    top: 1%;
+    height: 98%;
+    border-radius: 4%;
+    border: hidden; }
+
+  #controlerButtonLayer {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    left: 3%;
+    bottom: 2%;
+    background-color: transparent; }
+
+  #controlButtonDirectionLayer {
+    display: flex;
+    flex-direction: row; }
+
+  .btn_control {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto; }
+
+  #controlButtonDirectionLayer .btn_control {
+    width: 40%; }
+
+  #controlerButtonLayer.hide {
+    display: none; } }
+
+/*# sourceMappingURL=app.css.map */
